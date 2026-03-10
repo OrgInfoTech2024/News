@@ -164,8 +164,6 @@ class News(QWidget):
 
         if response.status_code == 200:
             data = response.json()
-
-            # Today's weather
             today_weather = data['weather'][0]['description']
             today_clouds = data['clouds']['all']
             today_pressure = data['main']['pressure']
@@ -183,7 +181,6 @@ class News(QWidget):
                 self.lang[self.syslang]["Temperature (Maximum)"] + f":  {today_temp_max}°C"
             )
 
-            # Tomorrow's weather
             url = f'https://api.openweathermap.org/data/2.5/forecast?q={CITY_NAME}&appid={API_KEY}&units=metric'
             response = requests.get(url)
 
@@ -211,10 +208,7 @@ class News(QWidget):
 
     def load_saved_list(self):
         try:
-            # Get the home directory of the current user
             home_directory = os.path.expanduser("~")
-            
-            # Construct the full file path
             file_path = os.path.join(home_directory, '.programdates', 'weather.txt')
 
             with open(file_path, 'r') as f:
@@ -227,10 +221,7 @@ class News(QWidget):
     # CLOSING OF PROGRAMM
     
     def closeEvent(self, event):
-        # Get the home directory of the current user
         home_directory = os.path.expanduser("~")
-            
-        # Construct the full file path
         file_path = os.path.join(home_directory, '.programdates', 'weather.txt')
 
         with open(file_path, 'w') as f:
@@ -278,8 +269,6 @@ class News(QWidget):
             self.result_label.setText(converted_amount)
         else:
             self.result_label.setText(f"Converted amount: {converted_amount:.2f} {to_currency}")
-
-        # Clear input fields after conversion
         self.money_input.clear()
     
 
@@ -308,9 +297,7 @@ class News(QWidget):
         # SHOW
         self.webBrowserNews.show()
 
-    # Function to handle resizing event
     def on_resize(self, event):
-        # Adjust the size and position of the webBrowserNews when the main window is resized
         new_size = event.size()
         self.webBrowserNews.setGeometry(220, 5, new_size.width() - 230, new_size.height() - 10)
 
